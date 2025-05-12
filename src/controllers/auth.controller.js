@@ -109,12 +109,19 @@ export const login = async (req,res)=> {
 };
 
 export const logout = (req, res) => {
-    res.cookie('token', "", {
-        expires: new Date(0)
-    })
-    return res.sendStatus(200).json({message: "Logout successfully"})
-    //res.send("logout")
-}
+    // 1. Limpiar la cookie de forma segura
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+    });
+    
+    // 2. Enviar UNA sola respuesta combinada
+    res.status(200).json({
+        success: true,
+        message: "Logout exitoso"
+    });
+};
 
 export const profile = async (req,res) => {
     const userFound = await User.findById(req.user.id)
