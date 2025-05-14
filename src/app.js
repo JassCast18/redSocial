@@ -4,9 +4,12 @@ import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.routes.js';
 import publiRoutes from './routes/publicaciones.routes.js';
 import followRoutes from './routes/follow.routes.js';
+import cors from 'cors';
 
 const app = express()
 
+
+app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
