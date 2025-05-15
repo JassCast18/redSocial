@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema({
     },
     imagenPerfil: {
         type: String,
-        default : "https://res.cloudinary.com/demo/image/upload/w_200,h_200,c_fill/default-avatar.png"
+        default : "https://res.cloudinary.com/dxi8rs61y/image/upload/v1746033556/samples/animals/cat.jpg"
     },
     seguidores: [{
         type: mongoose.Schema.Types.ObjectId,

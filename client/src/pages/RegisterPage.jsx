@@ -1,10 +1,19 @@
 import {useForm} from 'react-hook-form';
 import { userAuth } from '../context/AuthContext';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterPage() {
 
-    const {register, handleSubmit} = useForm()
-    const {signup, user} = userAuth()
+    const {register, handleSubmit, formState:{
+        errors
+    }} = useForm();
+    const {signup, isAuthenticated} = userAuth();
+    const navigation = useNavigate();
+
+    useEffect(() => {
+        if (isAuthenticated) navigation('/profile');
+    }, [isAuthenticated]);
 
     const onSubmit = handleSubmit(async (values) => {
         signup(values);
@@ -27,6 +36,21 @@ function RegisterPage() {
                 {... register("password", {required: true})}
                 className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
                 placeholder='password'
+            />
+            <input type="text" 
+                {... register("nombre", {required: true})}
+                className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
+                placeholder='nombre'
+            />
+             <input type="text" 
+                {... register("Apellido", {required: true})}
+                className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
+                placeholder='Apellido'
+            />
+            <input type="date" 
+                {... register("fechaNacimiento", {required: true})}
+                className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
+                placeholder='fechaNacimiento'
             />
             <button type="submit">
                 Register
