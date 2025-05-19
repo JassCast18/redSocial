@@ -9,7 +9,7 @@ export const register = async (req,res)=> {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const {email,password, username, infoPersonal} =req.body;
+    const {email,password, username, infoPersonal, imagenPerfil} =req.body;
     try {
 
         // Verificar si el usuario o email ya existen
@@ -34,7 +34,8 @@ export const register = async (req,res)=> {
                 fechaNacimiento: infoPersonal?.fechaNacimiento || null,
                 sexo: infoPersonal?.sexo || 'Prefiero no decir',
                 direccion: infoPersonal?.direccion || ''
-            }
+            },
+            imagenPerfil: imagenPerfil && imagenPerfil.trim() !== '' ? imagenPerfil : undefined
         });
         
         const userSaved = await newUser.save()

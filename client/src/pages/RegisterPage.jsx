@@ -18,8 +18,20 @@ function RegisterPage() {
     }, [isAuthenticated]);
 
     const onSubmit = handleSubmit(async (values) => {
-        signup(values);
-    });
+    const userData = {
+        username: values.username,
+        email: values.email,
+        password: values.password,
+        infoPersonal: {
+            nombre: values.nombre,
+            apellido: values.apellido,
+            fechaNacimiento: values.fechaNacimiento,
+        },
+         imagenPerfil: image, // opcional
+    };
+    signup(userData);
+});
+
 
     return (
         <div className="bg-zinc-800 max-w-md p-10 roudend-md">
@@ -45,9 +57,9 @@ function RegisterPage() {
                     placeholder='nombre'
                 />
                 <input type="text"
-                    {...register("Apellido", { required: true })}
+                    {...register("apellido", { required: true })}
                     className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
-                    placeholder='Apellido'
+                    placeholder='apellido'
                 />
                 <input type="date"
                     {...register("fechaNacimiento", { required: true })}
