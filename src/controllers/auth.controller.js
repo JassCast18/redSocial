@@ -122,17 +122,25 @@ export const logout = (req, res) => {
     });
 };
 
-export const profile = async (req,res) => {
-    const userFound = await User.findById(req.user.id)
-    if(!userFound) return res.status(400).json({message: "User not found"});
 
-    return res.json(
-        {
+export const profile = async (req, res) => {
+    try {
+        const userFound = await User.findById(req.user.id).select('-password');
+        if (!userFound) return res.status(400).json({ message: "User not found" });
+
+        return res.json({
             id: userFound._id,
             username: userFound.username,
             email: userFound.email,
+            imagenPerfil: userFound.imagenPerfil,
+            infoPersonal: userFound.infoPersonal,
+            seguidores: userFound.seguidores.length,
+            seguidos: userFound.seguidos.length,
             createdAt: userFound.createdAt,
-            updatedAt: userFound.updatedAt
-        })
-    res.send("profile")
+            updatedAt: userFound.updatedAt,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error fetching profile" });
+    }
 }
