@@ -15,9 +15,7 @@ export const register = async (req,res)=> {
         // Verificar si el usuario o email ya existen
         const userExists = await User.findOne({ $or: [{ email }, { username }] });
         if (userExists) {
-            return res.status(400).json({
-                message: ['El email o nombre de usuario ya están en uso']
-            });
+            return res.status(400).json(['El email o nombre de usuario ya están en uso']);
         }
 
         //hashear la contra
