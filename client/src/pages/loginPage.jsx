@@ -29,12 +29,12 @@ export default function LoginPage() {
   }, [isAuthenticated, navigate]);
 
   return (
-    <div className="h-screen flex items-center justify-center bg-gray-50 p-4">
-      <Card className="w-full max-w-md shadow-xl p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 px-4">
+      <Card className="w-full max-w-md shadow-2xl rounded-2xl p-8 bg-white">
         <div className="text-center mb-6">
-          <img src="/logo.png" alt="App Logo" className="mx-auto w-16 h-16 mb-2" />
-          <h1 className="text-3xl font-extrabold">Welcome back</h1>
-          <p className="text-gray-500">Log in to connect with your friends</p>
+          <img src="/logo.png" alt="App Logo" className="mx-auto w-20 h-20 mb-3 rounded-full shadow-md" />
+          <h1 className="text-3xl font-bold text-gray-800">Bienvenido de nuevo</h1>
+          <p className="text-gray-500 text-sm mt-1">Inicia sesión para continuar</p>
         </div>
 
         {loginErrors.length > 0 &&
@@ -44,12 +44,13 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <Label htmlFor="email">Email:</Label>
+            <Label htmlFor="email" className="text-gray-700">Correo electrónico</Label>
             <Input
               id="email"
               type="email"
-              placeholder="youremail@domain.tld"
+              placeholder="ejemplo@correo.com"
               {...register("email")}
+              className="mt-1"
             />
             {errors.email && (
               <p className="text-sm text-red-600">{errors.email.message}</p>
@@ -57,50 +58,48 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <Label htmlFor="password">Password:</Label>
+            <Label htmlFor="password" className="text-gray-700">Contraseña</Label>
             <Input
               id="password"
               type="password"
-              placeholder="Write your password"
+              placeholder="********"
               {...register("password")}
+              className="mt-1"
             />
             {errors.password && (
               <p className="text-sm text-red-600">{errors.password.message}</p>
             )}
           </div>
 
-          <div className="flex items-center justify-between text-sm">
+          <div className="flex items-center justify-between text-sm text-gray-600">
             <label className="flex items-center gap-2">
-              <input type="checkbox" className="form-checkbox" /> Remember me
+              <input type="checkbox" className="form-checkbox text-blue-500" /> Recordarme
             </label>
-            <Link to="/forgot-password" className="text-sky-500 hover:underline">
-              Forgot password?
+            <Link to="/forgot-password" className="text-blue-500 hover:underline">
+              ¿Olvidaste tu contraseña?
             </Link>
           </div>
 
-          <Button type="submit" disabled={isSubmitting} className="w-full">
-            {isSubmitting ? "Logging in..." : "Login"}
+          <Button type="submit" disabled={isSubmitting} className="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-colors">
+            {isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
           </Button>
         </form>
 
         <div className="mt-6 text-center">
-          <p className="text-sm text-gray-500 mb-2">or continue with</p>
+          <p className="text-sm text-gray-500 mb-2">O continúa con</p>
           <div className="flex gap-4 justify-center">
-            <Button variant="outline">Google</Button>
-            <Button variant="outline">Facebook</Button>
+            <Button variant="outline" className="hover:bg-red-100">Google</Button>
+            <Button variant="outline" className="hover:bg-blue-100">Facebook</Button>
           </div>
         </div>
 
-        <p className="mt-6 text-center text-sm">
-          Don't have an account?{" "}
-          <Link to="/register" className="text-sky-500 hover:underline">
-            Sign up
+        <p className="mt-6 text-center text-sm text-gray-600">
+          ¿No tienes una cuenta?{" "}
+          <Link to="/register" className="text-blue-500 hover:underline font-medium">
+            Regístrate
           </Link>
         </p>
       </Card>
     </div>
   );
 }
-
-
-export default loginPage
