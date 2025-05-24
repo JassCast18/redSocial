@@ -53,7 +53,7 @@ const Feed = () => {
                 className="w-10 h-10 rounded-full object-cover mr-3"
               />
               <div>
-                <p className="font-semibold">{pub.user.username}</p>
+                <p className="font-semibold text-black">{pub.user.username}</p>
                 <p className="text-xs text-gray-400">
                   {new Date(pub.fechaCreacion).toLocaleString()}
                 </p>
@@ -61,7 +61,7 @@ const Feed = () => {
             </div>
 
             {/* Título y contenido */}
-            {pub.titulo && <h3 className="text-lg font-bold mb-1">{pub.titulo}</h3>}
+            {pub.titulo && <h3 className="text-lg font-bold mb-1 text-black">{pub.titulo}</h3>}
             {pub.contenido && <p className="text-gray-700 mb-3">{pub.contenido}</p>}
 
             {/* Multimedia */}

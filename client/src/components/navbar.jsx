@@ -12,7 +12,7 @@ function Navbar() {
   return (
     <nav className="bg-blue-600 text-white px-6 py-4 flex justify-between items-center shadow-md">
       <div className="text-xl font-bold">
-        <Link to="/publicaciones">RedSocial</Link>
+        <Link to="/feed">RedSocial</Link>
       </div>
 
       <div className="flex gap-4 items-center">
