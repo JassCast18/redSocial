@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import axios from "../api/axios"; // tu instancia configurada
+import axios from "../api/axios";
 import { userAuth } from "../context/AuthContext";
-import { FaRegHeart, FaHeart } from "react-icons/fa"; // para iconos de like
+import { FaRegHeart, FaHeart } from "react-icons/fa";
+import socket from "../socket"; // <--- Importa tu instancia de socket.io-client
 
 const Feed = () => {
   const [publicaciones, setPublicaciones] = useState([]);
-  const { user } = userAuth(); // autenticado
+  const { user } = userAuth();
 
+  // Cargar publicaciones iniciales
   useEffect(() => {
     const fetchPublicaciones = async () => {
       try {
@@ -20,10 +22,22 @@ const Feed = () => {
     fetchPublicaciones();
   }, []);
 
+  // Socket.IO: escuchar publicaciones nuevas en tiempo real
+  useEffect(() => {
+    const onNuevaPublicacion = (newPub) => {
+      setPublicaciones((prev) => [newPub, ...prev]);
+    };
+
+    socket.on("nueva-publicacion", onNuevaPublicacion);
+
+    // Limpieza
+    return () => socket.off("nueva-publicacion", onNuevaPublicacion);
+  }, []);
+
   const handleLike = async (id) => {
     try {
       await axios.post(`/publicaciones/${id}/like`);
-      // Recargar publicaciones (opcional: puedes hacer esto más eficiente)
+      // Recargar publicaciones (opcional: puedes hacerlo más eficiente)
       const res = await axios.get("/publicaciones");
       setPublicaciones(res.data);
     } catch (error) {

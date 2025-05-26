@@ -1,4 +1,6 @@
 import Publication from "../models/publicacion.model.js";
+import { io } from '../index.js'
+
 export const getPublications = async (req, res) => {
     try {
         // 1. Asegurar que seguidos sea un array válido
@@ -70,12 +72,15 @@ export const CreatePublication = async (req, res) => {
                 errors
             });
         }
+        
 
         const savedPublication = await newPublication.save();
         
         const populatedPublication = await Publication.findById(savedPublication._id)
             .populate('user', 'username imagenPerfil')
             .populate('menciones', 'username imagenPerfil');
+
+         io.emit('nueva-publicacion', populatedPublication)
 
         res.status(201).json(populatedPublication);
     } catch (error) {
