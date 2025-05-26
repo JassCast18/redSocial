@@ -7,7 +7,7 @@ import NewPublicacion from './pages/newPublicacion';
 import ProfilePage from './pages/profilePage';
 import HomePage from './pages/homePage';
 import FeedPage from './pages/feedPage';
-import notificacionesPage from './pages/notificacionesPage';
+import NotificacionesPage from './pages/notificacionesPage';
 
 import ProtectedRouted from './protectedRouted';
 import ProtectedLayout from './components/protectedLayoud';
@@ -27,7 +27,7 @@ function App() {
           <Route element={<ProtectedRouted />}>
             <Route element={<ProtectedLayout />}>
               <Route path="/feed" element={<FeedPage />} />
-              <Route path='/notificaciones' element={<notificacionesPage />} />
+              <Route path='/notificaciones' element={<NotificacionesPage />} />
               <Route path='/Publicaciones' element={<PublicacionPage />} />
               <Route path='/Publicaciones/:id' element={<NewPublicacion />} />
               <Route path='/add-publicacion' element={<NewPublicacion />} />
