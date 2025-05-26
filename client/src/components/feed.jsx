@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "../api/axios";
 import { userAuth } from "../context/AuthContext";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-import socket from "../socket"; // <--- Importa tu instancia de socket.io-client
+import socket from "../socket";
 
 const Feed = () => {
   const [publicaciones, setPublicaciones] = useState([]);
   const { user } = userAuth();
 
-  // Cargar publicaciones iniciales
   useEffect(() => {
     const fetchPublicaciones = async () => {
       try {
@@ -22,7 +21,6 @@ const Feed = () => {
     fetchPublicaciones();
   }, []);
 
-  // Socket.IO: escuchar publicaciones nuevas en tiempo real
   useEffect(() => {
     const onNuevaPublicacion = (newPub) => {
       setPublicaciones((prev) => [newPub, ...prev]);
@@ -30,14 +28,12 @@ const Feed = () => {
 
     socket.on("nueva-publicacion", onNuevaPublicacion);
 
-    // Limpieza
     return () => socket.off("nueva-publicacion", onNuevaPublicacion);
   }, []);
 
   const handleLike = async (id) => {
     try {
       await axios.post(`/publicaciones/${id}/like`);
-      // Recargar publicaciones (opcional: puedes hacerlo más eficiente)
       const res = await axios.get("/publicaciones");
       setPublicaciones(res.data);
     } catch (error) {
@@ -52,14 +48,19 @@ const Feed = () => {
       )}
 
       {publicaciones.map((pub) => {
-        const yaDioLike = pub.likes?.includes(user._id);
+        // Maneja likes y fecha correctamente
+        const likes = pub.metricas?.likes || [];
+        const yaDioLike = likes.some(
+          (like) =>
+            like === user._id ||
+            (typeof like === "object" && (like._id === user._id || like._id?.toString() === user._id))
+        );
 
         return (
           <div
             key={pub._id}
             className="bg-white shadow-md rounded-2xl p-4 mb-6 border border-gray-200"
           >
-            {/* Header con imagen y nombre del usuario */}
             <div className="flex items-center mb-3">
               <img
                 src={pub.user.imagenPerfil || "/img/default-profile.png"}
@@ -69,16 +70,14 @@ const Feed = () => {
               <div>
                 <p className="font-semibold text-black">{pub.user.username}</p>
                 <p className="text-xs text-gray-400">
-                  {new Date(pub.fechaCreacion).toLocaleString()}
+                  {pub.createdAt ? new Date(pub.createdAt).toLocaleString() : "Sin fecha"}
                 </p>
               </div>
             </div>
 
-            {/* Título y contenido */}
             {pub.titulo && <h3 className="text-lg font-bold mb-1 text-black">{pub.titulo}</h3>}
             {pub.contenido && <p className="text-gray-700 mb-3">{pub.contenido}</p>}
 
-            {/* Multimedia */}
             {pub.multimedia?.length > 0 && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
                 {pub.multimedia.map((url, idx) => (
@@ -92,7 +91,6 @@ const Feed = () => {
               </div>
             )}
 
-            {/* Hashtags */}
             {pub.hashtags?.length > 0 && (
               <div className="flex flex-wrap gap-2 text-sm text-blue-600 mb-2">
                 {pub.hashtags.map((tag, idx) => (
@@ -103,7 +101,6 @@ const Feed = () => {
               </div>
             )}
 
-            {/* Botón de Like */}
             <button
               onClick={() => handleLike(pub._id)}
               className={`flex items-center gap-1 text-sm font-medium ${
@@ -111,7 +108,7 @@ const Feed = () => {
               }`}
             >
               {yaDioLike ? <FaHeart /> : <FaRegHeart />}
-              {pub.likes?.length || 0}
+              {likes.length}
             </button>
           </div>
         );

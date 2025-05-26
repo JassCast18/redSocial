@@ -29,7 +29,7 @@ function App() {
               <Route path="/feed" element={<FeedPage />} />
               <Route path='/notificaciones' element={<NotificacionesPage />} />
               <Route path='/Publicaciones' element={<PublicacionPage />} />
-              <Route path='/Publicaciones/:id' element={<NewPublicacion />} />
+              <Route path='/publicacion/:id' element={<PublicacionPage />} />
               <Route path='/add-publicacion' element={<NewPublicacion />} />
               <Route path='/profile' element={<ProfilePage />} />
             </Route>
