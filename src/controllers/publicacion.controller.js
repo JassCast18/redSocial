@@ -90,10 +90,15 @@ export const CreatePublication = async (req, res) => {
         });
     }
 };
+
 export const getPublication = async (req, res) => {
     try {
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ message: "ID de publicación inválido" });
+        }
+
         const publication = await Publication.findById(req.params.id)
-            .populate('usuarioId', 'username imagenPerfil')
+            .populate('user', 'username imagenPerfil')
             .populate('menciones', 'username imagenPerfil')
             .populate('metricas.likes', 'username imagenPerfil');
 
@@ -103,8 +108,8 @@ export const getPublication = async (req, res) => {
 
         // Verificar privacidad
         if (publication.privacidad === "soloAmigos" && 
-            !publication.usuarioId.equals(req.user.id) && 
-            !req.user.seguidos.includes(publication.usuarioId._id)) {
+            !publication.user.equals(req.user.id) && 
+            !req.user.seguidos.includes(publication.user._id)) {
             return res.status(403).json({ message: "No tienes permiso para ver esta publicación" });
         }
 
@@ -114,13 +119,13 @@ export const getPublication = async (req, res) => {
 
         res.json(publication);
     } catch (error) {
+        console.error(error); // <--- AGREGA ESTO PARA LOGS
         res.status(500).json({
             message: "Error al obtener publicación",
             error: error.message
         });
     }
 };
-
 export const updatePublication = async (req, res) => {
     try {
         // Verificar que el usuario es el autor
