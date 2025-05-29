@@ -9,7 +9,7 @@ const homePage = () => {
             <div className="bg-white text-gray-900 p-8 rounded-3xl shadow-xl max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
                 
                 <div className="space-y-6">
-                    <h1 className="text-4xl font-bold">Bienvenido a <span className="text-blue-600">RedSocialX</span></h1>
+                    <h1 className="text-4xl font-bold">Bienvenido a <span className="text-blue-600">RedSocial</span></h1>
                     <p className="text-lg">
                         Conéctate con amigos, comparte tus pensamientos y mantente al día con lo que importa.
                     </p>

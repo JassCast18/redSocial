@@ -1,5 +1,6 @@
 import Publication from "../models/publicacion.model.js";
 import { io } from '../index.js'
+import mongoose from "mongoose";
 
 export const getPublications = async (req, res) => {
     try {
