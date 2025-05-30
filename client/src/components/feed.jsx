@@ -101,15 +101,22 @@ const Feed = () => {
               </div>
             )}
 
-            <button
-              onClick={() => handleLike(pub._id)}
-              className={`flex items-center gap-1 text-sm font-medium ${
-                yaDioLike ? "text-red-500" : "text-gray-500 hover:text-red-500"
-              }`}
-            >
-              {yaDioLike ? <FaHeart /> : <FaRegHeart />}
-              {likes.length}
-            </button>
+            <div className="flex items-center gap-4 mt-2">
+              <button
+                onClick={() => handleLike(pub._id)}
+                className={`flex items-center gap-1 text-sm font-medium ${yaDioLike ? "text-red-500" : "text-gray-500 hover:text-red-500"
+                  }`}
+              >
+                {yaDioLike ? <FaHeart /> : <FaRegHeart />}
+                {likes.length}
+              </button>
+              <a
+                href={`/publicacion/${pub._id}`}
+                className="text-sm text-blue-500 hover:underline"
+              >
+                Ver publicación y comentarios
+              </a>
+            </div>
           </div>
         );
       })}
