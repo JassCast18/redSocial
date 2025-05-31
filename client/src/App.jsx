@@ -8,6 +8,8 @@ import ProfilePage from './pages/profilePage';
 import HomePage from './pages/homePage';
 import FeedPage from './pages/feedPage';
 import NotificacionesPage from './pages/notificacionesPage';
+import MensajesPage from "./pages/MensajesPage";
+import ChatPage from "./pages/chatPage";
 
 import ProtectedRouted from './protectedRouted';
 import ProtectedLayout from './components/protectedLayoud';
@@ -32,6 +34,8 @@ function App() {
               <Route path='/publicacion/:id' element={<PublicacionPage />} />
               <Route path='/add-publicacion' element={<NewPublicacion />} />
               <Route path='/profile' element={<ProfilePage />} />
+              <Route path="/mensajes" element={<MensajesPage />} />
+<Route path="/chat/:otherUserId" element={<ChatPage />} />
             </Route>
           </Route>
         </Routes>
