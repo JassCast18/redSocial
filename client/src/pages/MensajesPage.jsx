@@ -24,7 +24,6 @@ const MensajesPage = () => {
       setLoading(false);
     };
     fetchChats();
-    // Opción: agregar socket listener para nuevos mensajes y refrescar lista
   }, []);
 
   if (loading) return <div className="p-8 text-center">Cargando chats...</div>;
@@ -35,13 +34,13 @@ const MensajesPage = () => {
       <h2 className="text-2xl font-bold mb-4">Tus Chats</h2>
       <ul>
         {chats.map(chat => {
-          // Mostrar el otro participante
           const otro = chat.participantes.find(u => u._id !== user._id);
           const ultimoMsg = chat.mensajes.length
             ? chat.mensajes[chat.mensajes.length - 1]
             : null;
           return (
             <li key={chat._id} className="mb-4 border-b pb-3 flex items-center">
+              {/* El enlace va a /chat/:otherUserId */}
               <Link to={`/chat/${otro._id}`} className="flex items-center w-full hover:bg-blue-50 rounded px-2 py-1">
                 <img
                   src={otro.imagenPerfil || "/img/default-profile.png"}

@@ -12,12 +12,11 @@ const ChatPage = () => {
   const [loading, setLoading] = useState(true);
   const chatBottomRef = useRef(null);
 
-  // Unirse a sala personal
   useEffect(() => {
     if (user) socket.emit("join", user._id);
   }, [user]);
 
-  // Obtener o crear chat
+  // Obtener o crear chat entre user y otherUserId
   useEffect(() => {
     const fetchChat = async () => {
       try {
@@ -31,7 +30,6 @@ const ChatPage = () => {
     fetchChat();
   }, [otherUserId]);
 
-  // Recibir mensajes en tiempo real
   useEffect(() => {
     const handleNuevoMensaje = ({ chatId, mensaje: msg }) => {
       if (chat && chat._id === chatId) {
@@ -45,7 +43,6 @@ const ChatPage = () => {
     return () => socket.off("nuevo-mensaje", handleNuevoMensaje);
   }, [chat]);
 
-  // Auto-scroll al final del chat
   useEffect(() => {
     chatBottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat?.mensajes]);
@@ -55,7 +52,6 @@ const ChatPage = () => {
     if (!mensaje.trim()) return;
     await axios.post(`/chat/${chat._id}/mensajes`, { contenido: mensaje });
     setMensaje("");
-    // El mensaje llegará por socket
   };
 
   if (loading) return <div className="p-8 text-center">Cargando chat...</div>;
