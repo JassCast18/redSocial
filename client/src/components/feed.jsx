@@ -3,6 +3,7 @@ import axios from "../api/axios";
 import { userAuth } from "../context/AuthContext";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import socket from "../socket";
+import { Link } from "react-router-dom"; // <-- IMPORTANTE
 
 const Feed = () => {
   const [publicaciones, setPublicaciones] = useState([]);
@@ -110,12 +111,12 @@ const Feed = () => {
                 {yaDioLike ? <FaHeart /> : <FaRegHeart />}
                 {likes.length}
               </button>
-              <a
-                href={`/publicacion/${pub._id}`}
+              <Link
+                to={`/publicacion/${pub._id}`}
                 className="text-sm text-blue-500 hover:underline"
               >
                 Ver publicación y comentarios
-              </a>
+              </Link>
             </div>
           </div>
         );

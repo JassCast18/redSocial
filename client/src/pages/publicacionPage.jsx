@@ -88,7 +88,51 @@ const PublicacionPage = () => {
       >
         ← Volver
       </button>
-      {/* ... resto de la publicación ... */}
+
+      {/* Mostrar datos de la publicación */}
+      <div className="mb-4">
+        <div className="flex items-center mb-3">
+          <img
+            src={pub.user?.imagenPerfil || "/img/default-profile.png"}
+            alt="Perfil"
+            className="w-10 h-10 rounded-full object-cover mr-3"
+          />
+          <div>
+            <p className="font-semibold text-black">{pub.user?.username}</p>
+            <p className="text-xs text-gray-400">
+              {pub.createdAt ? new Date(pub.createdAt).toLocaleString() : "Sin fecha"}
+            </p>
+          </div>
+        </div>
+        {pub.titulo && (
+          <h2 className="text-xl font-bold mb-2 text-black">{pub.titulo}</h2>
+        )}
+        {pub.contenido && (
+          <p className="mb-4 text-gray-800">{pub.contenido}</p>
+        )}
+        {pub.multimedia?.length > 0 && (
+          <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {pub.multimedia.map((url, idx) => (
+              <img
+                key={idx}
+                src={url}
+                alt={`media-${idx}`}
+                className="w-full rounded-lg object-cover"
+              />
+            ))}
+          </div>
+        )}
+        {pub.hashtags?.length > 0 && (
+          <div className="flex flex-wrap gap-2 text-sm text-blue-600 mb-2">
+            {pub.hashtags.map((tag, idx) => (
+              <span key={idx} className="hover:underline cursor-pointer">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+
       <button
         onClick={handleLike}
         className={`flex items-center gap-1 text-sm font-medium ${
@@ -101,18 +145,18 @@ const PublicacionPage = () => {
       
       {/* SECCIÓN DE COMENTARIOS */}
       <section className="mt-8">
-        <h4 className="text-lg font-semibold mb-2">Comentarios</h4>
+        <h4 className="text-lg font-semibold mb-2 text-blue-600">Comentarios</h4>
         <form onSubmit={handleComentar} className="mb-4 flex gap-2">
           <input
-            type="text"
-            className="flex-1 border rounded px-2 py-1"
-            value={nuevoComentario}
-            placeholder="Escribe un comentario..."
-            onChange={e => setNuevoComentario(e.target.value)}
-          />
+  type="text"
+  className="flex-1 border rounded px-2 py-1 bg-white text-black placeholder-gray-400"
+  value={nuevoComentario}
+  placeholder="Escribe un comentario..."
+  onChange={e => setNuevoComentario(e.target.value)}
+/>
           <button
             type="submit"
-            className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+            className="bg-blue-500 text-black px-3 py-1 rounded hover:bg-blue-600"
           >
             Comentar
           </button>
@@ -120,7 +164,7 @@ const PublicacionPage = () => {
         {loadingComentarios ? (
           <div>Cargando comentarios...</div>
         ) : comentarios.length === 0 ? (
-          <div className="text-gray-400">No hay comentarios todavía.</div>
+          <div className="text-blue-600">No hay comentarios todavía.</div>
         ) : (
           <ul>
             {comentarios.map(com => (
@@ -131,12 +175,12 @@ const PublicacionPage = () => {
                     alt="Perfil"
                     className="w-7 h-7 rounded-full object-cover mr-2"
                   />
-                  <span className="font-semibold">{com.user.username}</span>
-                  <span className="ml-2 text-xs text-gray-400">
+                  <span className="font-semibold text-blue-900">{com.user.username}</span>
+                  <span className="ml-2 text-xs text-blue-600">
                     {new Date(com.createdAt).toLocaleString()}
                   </span>
                 </div>
-                <div className="ml-9">{com.contenido}</div>
+                <div className="ml-9 text-blue-900">{com.contenido}</div>
               </li>
             ))}
           </ul>
