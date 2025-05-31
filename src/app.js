@@ -5,7 +5,8 @@ import authRoutes from './routes/auth.routes.js';
 import publiRoutes from './routes/publicaciones.routes.js';
 import followRoutes from './routes/follow.routes.js';
 import notificacionRoutes from './routes/noticaciones.routes.js';
-import chatRoutes from './routes/chat.routes.js';
+import chatRoutes from './routes/chat.routes.js'
+import userRoutes from './routes/user.routes.js';;
 import cors from 'cors';
 
 const app = express()
@@ -24,6 +25,7 @@ app.use("/api",authRoutes);
 app.use("/api",publiRoutes);
 app.use("/api",followRoutes);
 app.use("/api",notificacionRoutes);
-app.use("/api",chatRoutes);
+app.use("/api/chat",chatRoutes);
 
+app.use("/api/users", userRoutes);
 export default app;

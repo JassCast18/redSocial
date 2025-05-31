@@ -34,6 +34,8 @@ function App() {
               <Route path='/publicacion/:id' element={<PublicacionPage />} />
               <Route path='/add-publicacion' element={<NewPublicacion />} />
               <Route path='/profile' element={<ProfilePage />} />
+                {/* Otras rutas */}
+      <Route path="/profile/:id" element={<ProfilePage />} />
               <Route path="/mensajes" element={<MensajesPage />} />
 <Route path="/chat/:otherUserId" element={<ChatPage />} />
             </Route>

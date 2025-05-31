@@ -31,7 +31,7 @@ const MensajesPage = () => {
   if (!chats.length) return <div className="p-8 text-center text-gray-500">No tienes chats aún.</div>;
 
   return (
-    <div className="max-w-lg mx-auto mt-6 p-4 bg-white rounded shadow">
+    <div className="max-w-lg mx-auto mt-6 p-4 bg-white text-gray-500 rounded shadow">
       <h2 className="text-2xl font-bold mb-4">Tus Chats</h2>
       <ul>
         {chats.map(chat => {

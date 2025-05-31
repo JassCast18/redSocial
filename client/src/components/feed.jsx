@@ -62,19 +62,24 @@ const Feed = () => {
             key={pub._id}
             className="bg-white shadow-md rounded-2xl p-4 mb-6 border border-gray-200"
           >
-            <div className="flex items-center mb-3">
-              <img
-                src={pub.user.imagenPerfil || "/img/default-profile.png"}
-                alt="Perfil"
-                className="w-10 h-10 rounded-full object-cover mr-3"
-              />
-              <div>
-                <p className="font-semibold text-black">{pub.user.username}</p>
-                <p className="text-xs text-gray-400">
-                  {pub.createdAt ? new Date(pub.createdAt).toLocaleString() : "Sin fecha"}
-                </p>
-              </div>
-            </div>
+           <div className="flex items-center mb-3">
+  <img
+    src={pub.user.imagenPerfil || "/img/default-profile.png"}
+    alt="Perfil"
+    className="w-10 h-10 rounded-full object-cover mr-3"
+  />
+  <div>
+    <Link
+      to={`/profile/${pub.user._id}`}
+      className="font-semibold text-black hover:underline"
+    >
+      {pub.user.username}
+    </Link>
+    <p className="text-xs text-gray-400">
+      {pub.createdAt ? new Date(pub.createdAt).toLocaleString() : "Sin fecha"}
+    </p>
+  </div>
+</div>
 
             {pub.titulo && <h3 className="text-lg font-bold mb-1 text-black">{pub.titulo}</h3>}
             {pub.contenido && <p className="text-gray-700 mb-3">{pub.contenido}</p>}

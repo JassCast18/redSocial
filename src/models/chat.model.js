@@ -26,20 +26,22 @@ const chatSchema = new mongoose.Schema({
     participantes:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Usuario',
-        required: true,
-        validate: [arrayMInLEngth(2), 'El chat debe tener al menos 2 participantes']
+        required: true
     }],
     mensajes:[mensajeSchema],
     ultima_actividad:{
         type: Date,
         default: Date.now
     },
+}, {
+    // Validación personalizada sobre el ARRAY de participantes
+    validate: {
+        validator: function(v) {
+            return v.participantes && v.participantes.length >= 2;
+        },
+        message: 'El chat debe tener al menos 2 participantes'
+    }
 });
-
-//validacion para el array de participantes
-function arrayMInLEngth(min) {
-    return (val) => val.length >= min;  
-}
 
 // Actualizar última actividad al agregar mensajes
 chatSchema.pre("save", function(next) {
