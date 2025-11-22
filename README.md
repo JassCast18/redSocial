@@ -55,14 +55,15 @@ Si deseas correr este proyecto en tu máquina local:
    ```bash
    git clone [https://github.com/JassCast18/redSocial.git](https://github.com/JassCast18/redSocial.git)
 2. Instalar dependencias
+   ```bash
    npm install
    cd client //para el frontEnd
    npm install
-3. Cambiar las cadenas de conexion
+4. Cambiar las cadenas de conexion
    cambiar tu cadena de conexion al bd :
 
    ![cambia la cadena de conexion](/assets/conexionCadena.png)
-4. Correr el programa
+5. Correr el programa
    en el backend y en el frontEnd ejecutar:
-
+```bash
    npm run dev
